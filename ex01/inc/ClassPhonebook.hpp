@@ -6,10 +6,15 @@
 class PhoneBook
 {
 	private:
-		Contact Contacts[8];
-		int		size; // количество занесенных пользователем Контактов
-	
+		// количество занесенных пользователем Контактов
+		int		size; 
+
 	public:
+		// просто тестирование что она может быть и
+		// public
+		int		add_index;
+		Contact Contacts[8];
+
 		void	init(void);
 		void	setSize(int newSize);
 		int		getSize(void);

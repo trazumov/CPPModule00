@@ -1,8 +1,4 @@
-#include <iostream>
-#include <cstring>
-
-#include "../inc/ClassContact.hpp"
-#include "../inc/ClassPhonebook.hpp"
+#include "../inc/phonebook.hpp"
 
 static int input_is_correct(std::string input)
 {
@@ -13,7 +9,6 @@ static int input_is_correct(std::string input)
 			return 0;
 		i++;
 	}
-	
 	return 1;
 }
 
@@ -30,7 +25,8 @@ int main(void)
 	PhoneBook	Book;
 
 	Book.init();
-	while (input != "EXIT" || input != "exit")
+	std::cout << "Insert command..\n";
+	while (input != "EXIT")
 	{
 		std::cin >> input;
 		if (!input_is_correct(input))
@@ -40,8 +36,10 @@ int main(void)
 		}
 		if (input == "ADD" || input == "add")
 			Book.addContact();
-		else if (input == "SHOW" || input == "show")
-			Book.showContactById(0);
+		else if (input == "SEARCH" || input == "search")
+			Book.search();
+		//else if (input == "SHOW" || input == "show")
+		//	Book.showContactById(0);
 		else
 			showhint();
 	}

@@ -4,7 +4,8 @@ SRCS		= src/ClassContact.cpp \
 			src/phonebook.cpp
 			
 CC			= clang++
-CFLAGS		= -Wall -Wextra -Werror -std=c++98
+#CFLAGS		= -Wall -Wextra -Werror -std=c++98
+CFLAGS		= -std=c++98
 
 all: $(NAME)
 
