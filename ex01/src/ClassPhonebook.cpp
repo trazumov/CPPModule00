@@ -1,10 +1,8 @@
-#include <iostream>
-#include <cstring>
+#include "../inc/phonebook.hpp"
+#include <stdlib.h>
 
 #include "../inc/ClassContact.hpp"
 #include "../inc/ClassPhonebook.hpp"
-
-std::string g_nums[8] = {"0", "1", "2", "3", "4", "5", "6", "7"};
 
 // std::to_string придумали в C11. Быдлокодеры до С11:
  static void	printID(int id)
@@ -38,16 +36,18 @@ int		PhoneBook::getSize(void)
 // 1 is ERROR | 0 is OK
 int		PhoneBook::showContactById(int id)
 {
-	if (id > this->size || id < 0)
+	if (id > this->size - 1 || id < 0)
 	{
 		std::cout << "Incorrect id of Contact" << std::endl;
+		std::cout << "Insert command.." << std::endl;
 		return 1;
 	}
-	//printID(id);
+	printID(id);
 	std::cout << "NAME: "<< this->Contacts[id].get_firstName() << std::endl;
 	std::cout << "SURNAME: "<< this->Contacts[id].get_lastName() << std::endl;
 	std::cout << "NICKNAME: "<< this->Contacts[id].get_nickName() << std::endl;
 	
+	std::cout << "Insert command.." << std::endl;
 	return 0;
 }
 
@@ -79,7 +79,28 @@ void	PhoneBook::addContact(void)
 
 static void print_str_alligned(std::string str)
 {
-	std::cout << str;
+	int	spaces;
+	int	j;
+	
+	j = 0;
+	spaces = 10 - str.length();
+	if (spaces <= 0)
+		spaces = 0;
+	for (size_t i = 0; i < 9; i++)
+	{
+		if (spaces-- > 0)
+			std::cout << " ";
+		else
+		{
+			std::cout << str[j];
+			j++;
+		}
+	}
+	if (str.length() > 10)
+		std::cout << ".";
+	else
+		std::cout << str[j];
+	//std::cout << str;
 }
 
 static void print_row(PhoneBook *book, int row)
@@ -88,32 +109,57 @@ static void print_row(PhoneBook *book, int row)
 	std::string lastname =  book->Contacts[row].get_lastName();
 	std::string nickname =  book->Contacts[row].get_nickName();
 
-	printID(row); std::cout << "|";
+	//printID(row); std::cout << "|";
+	std::cout << g_nums[row] << "  |";
 	print_str_alligned(name); std::cout << "|";
 	print_str_alligned(lastname); std::cout << "|";
-	print_str_alligned(nickname);
+	print_str_alligned(nickname); std::cout << "|";
 	
 }
 
-static int num_from_char(std::string s)
+static int num_from_string(std::string s)
 {
-	return 0;
+	return (s[0] - '0');
 }
 
 void	PhoneBook::search(void)
 {
 	std::string	input_id;
 	int			num_id;	
+	
+	std::cout << "ID |";
+	std::cout << "      Name|";
+	std::cout << " Last Name|";
+	std::cout << "  Nickname|" << std::endl;
 
 	if (this->size != 0)
+	{
 		for (size_t row = 0; row < this->size; row++)
+		{
 			print_row(this, row);
+			std::cout << std::endl;
+		}
+		std::cout << "Enter the ID to display\n";
+	}
 	else
-		std::cout << "Book is empty\n";
+	{
+		std::cout << "Book is empty" << std::endl;
+		std::cout << "Insert command.." << std::endl;
+		return ;
+	}
+
 	std::cin >> input_id;
-	num_id = num_from_char(input_id);
+	if (input_id == "EXIT" || input_id == "exit")
+	{
+		std::cout << "Exit phonebook" << std::endl;
+		std::exit (0);
+	}
+	num_id = num_from_string(input_id);
 	if (num_id < 0 || num_id > 7)
+	{
 		std::cout << "Incorrect input\n";
+		std::cout << "Insert command.." << std::endl;
+	}
 	else
 		this->showContactById(num_id);
 }
