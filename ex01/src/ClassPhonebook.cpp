@@ -1,5 +1,5 @@
 #include "../inc/phonebook.hpp"
-#include <stdlib.h>
+#include <stdlib.h> // exit()
 
 #include "../inc/ClassContact.hpp"
 #include "../inc/ClassPhonebook.hpp"
@@ -39,7 +39,6 @@ int		PhoneBook::showContactById(int id)
 	if (id > this->size - 1 || id < 0)
 	{
 		std::cout << "Incorrect id of Contact" << std::endl;
-		std::cout << "Insert command.." << std::endl;
 		return 1;
 	}
 	printID(id);
@@ -47,7 +46,6 @@ int		PhoneBook::showContactById(int id)
 	std::cout << "SURNAME: "<< this->Contacts[id].get_lastName() << std::endl;
 	std::cout << "NICKNAME: "<< this->Contacts[id].get_nickName() << std::endl;
 	
-	std::cout << "Insert command.." << std::endl;
 	return 0;
 }
 
@@ -61,15 +59,15 @@ void	PhoneBook::addContact(void)
 		this->add_index = 0;
 
 	std::cout << "Enter Name: ";
-	std::cin >> input;
+	getline(std::cin, input);
 	this->Contacts[this->add_index].set_firstName(input);
 
 	std::cout << "Enter Surname: ";
-	std::cin >> input;
+	getline(std::cin, input);
 	this->Contacts[this->add_index].set_lastName(input);
 
 	std::cout << "Enter Nickname: ";
-	std::cin >> input;
+	getline(std::cin, input);
 	this->Contacts[this->add_index].set_nickName(input);
 	
 	std::cout << "Contact was added to Phonebook" << std::endl;
@@ -100,7 +98,6 @@ static void print_str_alligned(std::string str)
 		std::cout << ".";
 	else
 		std::cout << str[j];
-	//std::cout << str;
 }
 
 static void print_row(PhoneBook *book, int row)
@@ -109,7 +106,6 @@ static void print_row(PhoneBook *book, int row)
 	std::string lastname =  book->Contacts[row].get_lastName();
 	std::string nickname =  book->Contacts[row].get_nickName();
 
-	//printID(row); std::cout << "|";
 	std::cout << g_nums[row] << "  |";
 	print_str_alligned(name); std::cout << "|";
 	print_str_alligned(lastname); std::cout << "|";
@@ -126,14 +122,13 @@ void	PhoneBook::search(void)
 {
 	std::string	input_id;
 	int			num_id;	
-	
-	std::cout << "ID |";
-	std::cout << "      Name|";
-	std::cout << " Last Name|";
-	std::cout << "  Nickname|" << std::endl;
 
 	if (this->size != 0)
 	{
+		std::cout << "ID |";
+		std::cout << "      Name|";
+		std::cout << " Last Name|";
+		std::cout << "  Nickname|" << std::endl;
 		for (size_t row = 0; row < this->size; row++)
 		{
 			print_row(this, row);
@@ -144,11 +139,10 @@ void	PhoneBook::search(void)
 	else
 	{
 		std::cout << "Book is empty" << std::endl;
-		std::cout << "Insert command.." << std::endl;
 		return ;
 	}
 
-	std::cin >> input_id;
+	getline(std::cin, input_id);
 	if (input_id == "EXIT" || input_id == "exit")
 	{
 		std::cout << "Exit phonebook" << std::endl;
@@ -156,10 +150,7 @@ void	PhoneBook::search(void)
 	}
 	num_id = num_from_string(input_id);
 	if (num_id < 0 || num_id > 7)
-	{
 		std::cout << "Incorrect input\n";
-		std::cout << "Insert command.." << std::endl;
-	}
 	else
 		this->showContactById(num_id);
 }

@@ -31,7 +31,6 @@ static void showhint(void)
 	std::cout << "The command is incorrect. List of commands: ADD / SEARCH / EXIT" \
 	<< std::endl;
 	std::cout << "Line break unavailable too." << std::endl;
-	std::cout << "Insert command.." << std::endl;
 }
 
 int main(void)
@@ -40,10 +39,10 @@ int main(void)
 	PhoneBook	Book;
 
 	Book.init();
-	std::cout << "Insert command.." << std::endl; // перенести в цикл и убрать
 	while (input != "EXIT" && input != "exit")
 	{
-		std::cin >> input;
+		std::cout << "Insert command.." << std::endl;
+		getline(std::cin, input);
 		if (!input_is_correct(input))
 		{
 			showhint();
